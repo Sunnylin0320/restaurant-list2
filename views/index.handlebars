@@ -19,11 +19,27 @@
 
 <!-- restaurant list -->
 <a href="./restaurants/new">Create</a>
-<ul>
-  {{#each restaurants}}
+<div class="container mt-5">
+    <div class="row" id="data-panel">
+      <ul>
+    {{#each restaurants}}
     <li>
-      {{this.name}}
-      <a href="./restaurants/{{ this._id }}">detail</a>
+    <div class="col-sm-3">
+       <a href="/restaurants/{{this.id}}" class="text-secondary">
+        <div class="card mb-2">
+          <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
+          <div class="card-body movie-item-body">
+            <h6 class="card-title">{{this.name}}</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <a href="./restaurants/{{ this._id }}">detail</a>
+      <a href="./restaurants/{{ this._id }}/edit">edit</a>
     </li>
-  {{/each}}
-</ul>
+    {{/each}}
+    </ul>
+
+  </div>
+</div>
+

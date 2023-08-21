@@ -1,20 +1,22 @@
 const express = require("express");
+const exphbs = require("express-handlebars");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const Restaurant = require("./models/restaurant");
 const app = express();
+const restaurantList = require("./restaurant.json");
+
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const mongoose = require("mongoose");
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 const port = 3000;
-const exphbs = require("express-handlebars");
-const bodyParser = require("body-parser");
-const Restaurant = require("./models/restaurant");
-const restaurantList = require("./restaurant.json");
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -61,15 +63,27 @@ app.get("/restaurants/:id", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-
-
-
-app.get("/restaurants/:restaurant_id", (req, res) => {
-  const restaurant = restaurantList.results.find(
-    (restaurant) => restaurant.id.toString() === req.params.restaurant_id
-  );
-  res.render("show", { restaurant: restaurant });
+app.get("/restaurants/:id/edit", (req, res) => {
+  const id = req.params.id;
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render("edit", { restaurant }))
+    .catch((error) => console.log(error));
 });
+
+app.post("/restaurants/:id/edit", (req, res) => {
+  const id = req.params.id;
+  const name = req.body.name;
+  return Restaurant.findById(id)
+    .then((restaurant) => {
+      restaurant.name = name;
+      return restaurant.save();
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch((error) => console.log(error));
+});
+
+
 
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword;
