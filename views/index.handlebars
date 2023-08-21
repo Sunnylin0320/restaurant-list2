@@ -18,20 +18,10 @@
 </div>
 
 <!-- restaurant list -->
-<div class="container mt-5">
-    <div class="row" id="data-panel">
-    {{#each restaurants}}
-    <div class="col-sm-3">
-       <a href="/restaurants/{{this.id}}" class="text-secondary">
-        <div class="card mb-2">
-          <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
-          <div class="card-body movie-item-body">
-            <h6 class="card-title">{{this.name}}</h6>
-          </div>
-        </div>
-      </a>
-    </div>
-    {{/each}}
-
-  </div>
-</div>
+ <ul>
+  {{#each restaurants}}
+    <li>
+      {{this.name}}
+    </li>
+  {{/each}}
+</ul>
