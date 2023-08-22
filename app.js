@@ -2,6 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override"); 
 const Restaurant = require("./models/restaurant");
 const app = express();
 const restaurantList = require("./restaurant.json");
@@ -31,6 +32,7 @@ db.once('open', () => {
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
@@ -39,6 +41,7 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   Restaurant.find()
     .lean()
+    .sort({ _id: "asc" }) // desc
     .then((restaurants) => res.render("index", { restaurants }))
     .catch((error) => console.error(error));
 });
@@ -71,7 +74,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-app.post("/restaurants/:id/edit", (req, res) => {
+app.put("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
   return Restaurant.findById(id)
@@ -94,7 +97,7 @@ app.get("/search", (req, res) => {
 });
 
 
-app.post("/restaurants/:id/delete", (req, res) => {
+app.delete("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())
