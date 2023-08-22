@@ -3,9 +3,9 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override"); 
-const Restaurant = require("./models/restaurant");
+const routes = require("./routes");
 const app = express();
-const restaurantList = require("./restaurant.json");
+
 
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
@@ -36,74 +36,12 @@ app.use(methodOverride("_method"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
+app.use(routes);
 
 // routes setting
-app.get("/", (req, res) => {
-  Restaurant.find()
-    .lean()
-    .sort({ _id: "asc" }) // desc
-    .then((restaurants) => res.render("index", { restaurants }))
-    .catch((error) => console.error(error));
-});
-
-app.get("/restaurants/new", (req, res) => {
-  return res.render("new");
-});
-
-
-app.post("/restaurants", (req, res) => {
-  const name = req.body.name; // 從 req.body 拿出表單裡的 name 資料
-  return Restaurant.create({ name }) // 存入資料庫
-    .then(() => res.redirect("/")) // 新增完成後導回首頁
-    .catch((error) => console.log(error));
-});
-
-app.get("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("show", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-app.get("/restaurants/:id/edit", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("edit", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-app.put("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  const name = req.body.name;
-  return Restaurant.findById(id)
-    .then((restaurant) => {
-      restaurant.name = name;
-      return restaurant.save();
-    })
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
-});
 
 
 
-app.get("/search", (req, res) => {
-  const keyword = req.query.keyword;
-  const restaurants = restaurantList.results.filter((restaurant) => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase());
-  });
-  res.render("index", { restaurants: restaurants, keyword: keyword });
-});
-
-
-app.delete("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return Restaurant.findById(id)
-    .then((restaurant) => restaurant.remove())
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
 
 
 // start and listen on the Express server
