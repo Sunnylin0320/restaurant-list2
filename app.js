@@ -22,6 +22,13 @@ app.use(
 );
 app.use(express.static("public"));
 usePassport(app);
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 app.use(routes);
 
 // start and listen on the Express server
