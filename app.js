@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override"); 
 const routes = require("./routes");
+const usePassport = require("./config/passport");
 const port = 3000;
 
 require("./config/mongoose");
@@ -20,6 +21,7 @@ app.use(
   })
 );
 app.use(express.static("public"));
+usePassport(app);
 app.use(routes);
 
 // start and listen on the Express server
