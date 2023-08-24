@@ -5,9 +5,12 @@ if (process.env.NODE_ENV !== "production") {
 const mongoose = require("mongoose");
 
 mongoose.set("useFindAndModify", false);
-mongoose.connect(process.env.MONGODB_URI, {
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/restaurant-list";
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;
