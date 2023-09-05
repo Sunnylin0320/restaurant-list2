@@ -21,29 +21,27 @@
 
 <!-- restaurant list -->
 <div class="container mt-5">
-    <div class="row" id="data-panel">
-      <ul>
+    <div class="row justify-content-center" id="data-panel"> 
+
     {{#each restaurants}}
-    <li>
-    <div class="col-sm-3">
-       <a href="/restaurants/{{this.id}}" class="text-secondary">
-        <div class="card mb-2">
-          <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
-          <div class="card-body movie-item-body">
-            <h6 class="card-title">{{this.name}}</h6>
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <a href="/restaurants/{{this.id}}" class="text-secondary">
+          <div class="card">
+            <img class="card-img-top" src="{{this.image}}" alt="Card image cap">
+            <div class="card-body restaurant-item-body">         
+              <h6 class="card-title">{{this.name}}</h6>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <a href="./restaurants/{{ this._id }}">detail</a>
-      <a href="./restaurants/{{ this._id }}/edit">edit</a>
-       <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+        </a>
+        <div class="d-flex justify-content-around mt-2">
+          <a href="./restaurants/{{ this._id }}">detail</a>
+          <a href="./restaurants/{{ this._id }}/edit">edit</a>
+     
+          <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
             <button type="submit">delete</button>
           </form>
-    </li>
+        </div>
+      </div>
     {{/each}}
-    </ul>
-
   </div>
 </div>
-

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const restaurantList = require("../../models/seeds/restaurant.json")
 const Restaurant = require("../../models/restaurant");
 
 

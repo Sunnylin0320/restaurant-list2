@@ -43,7 +43,7 @@ router.put("/:id", (req, res) => {
       restaurant.name = name;
       return restaurant.save();
     })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch((error) => console.log(error));
 });
 
