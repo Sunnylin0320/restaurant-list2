@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const restaurantList = require("../../models/seeds/restaurant.json")
 const Restaurant = require("../../models/restaurant");
 
 
@@ -13,12 +12,18 @@ router.get("/", (req, res) => {
     .catch((error) => console.error(error));
 });
 
+
 router.get("/search", (req, res) => {
-  const keyword = req.query.keyword;
-  const restaurants = restaurantList.results.filter((restaurant) => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase());
-  });
-  res.render("index", { restaurants: restaurants, keyword: keyword });
+  const userId = req.user._id;
+  const keyword = req.query.keyword.trim().toLowerCase(); // 將關鍵字轉換為小寫
+
+  Restaurant.find({ userId, name: { $regex: keyword, $options: "i" } }) // 使用 $options: "i" 進行不區分大小寫搜尋
+    .lean()
+    .sort({ _id: "asc" })
+    .then((restaurants) => res.render("index", { restaurants, keyword }))
+    .catch((error) => console.error(error));
 });
+
+
 
 module.exports = router;
