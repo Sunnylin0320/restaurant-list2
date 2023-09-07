@@ -37,10 +37,19 @@ router.get("/:id/edit", (req, res) => {
 router.put("/:id", (req, res) => {
   const userId = req.user._id;
   const _id = req.params.id;
-  const name = req.body.name;
+  const { name, category, rating, phone, location, description, image, google_map } = req.body;
   return Restaurant.findOne({ _id, userId })
     .then((restaurant) => {
-      restaurant.name = name;
+      Object.assign(restaurant, {
+        name,
+        category,
+        rating,
+        phone,
+        location,
+        description,
+        image,
+        google_map,
+      }); // 使用對項屬性動態賦值
       return restaurant.save();
     })
     .then(() => res.redirect(`/restaurants/${_id}`))

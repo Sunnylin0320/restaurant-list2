@@ -7,36 +7,36 @@
       <form class="row g-4" action="/restaurants" method="post">
         <div class="col-md-7">
           <label for="name" class="form-label">中文名稱</label>
-          <input type="text" class="form-control" id="name" placeholder="請輸入餐廳名" name="name">
+          <input type="text" class="form-control" id="name" placeholder="請輸入餐廳名" name="name" value="{{restaurant.name}}">
         </div>
         <div class="col-md-4">
           <label for="category" class="form-label">料理分類</label>
-          <input type="text" class="form-control" id="category" placeholder="美式料理..." name="category">
+          <input type="text" class="form-control" id="category" placeholder="美式料理..." name="category" value="{{restaurant.category}}">
         </div>
         <div class="col-md-3">
           <label for="rating" class="form-label">評分</label>
           <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" placeholder="0 - 5.0"
-            name="rating">
+            name="rating" value="{{restaurant.rating}}">
         </div>
         <div class="col-md-5">
           <label for="phone" class="form-label">聯絡電話</label>
-          <input type="tel" class="form-control" id="phone" placeholder="02-XXXX-XXXX" name="phone">
+          <input type="tel" class="form-control" id="phone" placeholder="02-XXXX-XXXX" name="phone" value="{{restaurant.phone}}">
         </div>
         <div class="col-12">
           <label for="location" class="form-label">地址</label>
-          <input type="text" class="form-control" id="location" placeholder="請輸入餐廳地址" name="location">
+          <input type="text" class="form-control" id="location" placeholder="請輸入餐廳地址" name="location" value="{{restaurant.location}}">
         </div>
         <div class="col-12">
           <label for="description" class="form-label">特色</label>
-          <input type="text" class="form-control" id="description" placeholder="請輸入餐廳特色" name="description">
+          <input type="text" class="form-control" id="description" placeholder="請輸入餐廳特色" name="description" value="{{restaurant.description}}">
         </div>
         <div class="col-12">
           <label for="image" class="form-label">圖片網址</label>
-          <input type="text" class="form-control" id="image" placeholder="請輸入圖片網址" name="image">
+          <input type="text" class="form-control" id="image" placeholder="請輸入圖片網址" name="image" value="{{restaurant.image}}">
         </div>
         <div class="col-12">
           <label for="google-map" class="form-label">Google Map 網址</label>
-          <input type="text" class="form-control" id="google-map" placeholder="請輸入Google Map網址" name="google_map">
+          <input type="text" class="form-control" id="google-map" placeholder="請輸入Google Map網址" name="google_map" value="{{restaurant.google_map}}">
         </div>
 
         <div class="col-12">
