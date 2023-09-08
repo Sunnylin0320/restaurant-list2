@@ -10,8 +10,27 @@ router.get("/new", (req, res) => {
 
 router.post("/", (req, res) => {
   const userId = req.user._id;
-  const name = req.body.name; // 從 req.body 拿出表單裡的 name 資料
-  return Restaurant.create({ name, userId })
+  const {
+    name,
+    category,
+    rating,
+    phone,
+    location,
+    description,
+    image,
+    google_map,
+  } = req.body;
+  return Restaurant.create({
+    name,
+    userId,
+    category,
+    rating,
+    phone,
+    location,
+    description,
+    image,
+    google_map,
+  })
     .then(() => res.redirect("/")) // 新增完成後導回首頁
     .catch((error) => console.log(error));
 });
